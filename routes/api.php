@@ -16,5 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::post('login', 'UserController@login');
+
+//Routes for user
+Route::get('/users', 'UserController@index');
+Route::post('/addUser', 'UserController@addUser');
+Route::delete('/user/{id}', 'UserController@deleteUserbyID');
+
+
+
+Route::middleware('auth:api')->group(function () {
+});
