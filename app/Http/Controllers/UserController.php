@@ -86,4 +86,53 @@ class UserController extends Controller
             ]);
         }
     }
+
+    public function editUserbyID(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        $user->first_name = $request->input('first_name');
+        $user->middle_name = $request->input('middle_name');
+        $user->last_name = $request->input('last_name');
+        $user->email = $request->input('email');
+
+        $user->save();
+
+        if ($user->save() == 'true') {
+            return response()->json([
+                'code' => 200,
+                'message' => 'Updated successfully',
+                'user' => $user,
+            ]);
+        } else {
+            return response()->json([
+                'code' => 401,
+                'message' => 'Error updating user',
+            ]);
+        }
+    }
+
+    public function loginUserChangePass(Request $request, $id)
+    {
+        $this->validate($request, [
+            'password' => 'min:6',
+            'confirmPassword' => 'required_with:password|same:password|min:6'
+        ]);
+        $user = User::findOrFail($id);
+
+        $user->password = Hash::make($request->password);
+
+        if ($user->save() == 'true') {
+            return response()->json([
+                'code' => 200,
+                'message' => 'Password Updated Successfully!',
+                'user' => $user,
+            ]);
+        } else {
+            return response()->json([
+                'code' => 401,
+                'message' => 'Password Update Failed!',
+            ]);
+        }
+    }
 }
