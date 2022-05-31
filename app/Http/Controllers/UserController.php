@@ -135,4 +135,9 @@ class UserController extends Controller
             ]);
         }
     }
+
+    public function getLoginUser()
+    {
+        return auth()->user();
+    }
 }

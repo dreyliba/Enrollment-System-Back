@@ -19,12 +19,14 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', 'UserController@login');
 
 //Routes for user
-Route::get('/users', 'UserController@index');
-Route::post('/addUser', 'UserController@addUser');
-Route::delete('/user/{id}', 'UserController@deleteUserbyID');
-Route::post('/user/{id}', 'UserController@editUserbyID');
-Route::post('/userUpdatePassword/{id}', 'UserController@loginUserChangePass');
+Route::middleware('auth:api')->group(function () {  
+    Route::get('/users', 'UserController@index');
+    Route::post('/addUser', 'UserController@addUser');
+    Route::delete('/user/{id}', 'UserController@deleteUserbyID');
+    Route::post('/user/{id}', 'UserController@editUserbyID');
+    Route::post('/userUpdatePassword/{id}', 'UserController@loginUserChangePass');
+    
 
-
-Route::middleware('auth:api')->group(function () {
+//Routes for Track
+    Route::get('/tracks', 'TrackController@index');
 });
