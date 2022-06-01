@@ -29,4 +29,15 @@ Route::middleware('auth:api')->group(function () {
 
 //Routes for Track
     Route::get('/tracks', 'TrackController@index');
+    Route::get('/track/{id}', 'TrackController@getTrack');
+    Route::post('/addTrack', 'TrackController@addTrack');
+    Route::delete('/track/{id}', 'TrackController@deleteTrackbyID');
+    Route::post('/track/{id}', 'TrackController@editTrackbyID');
+
+//Routes for Strand
+    Route::get('/strands', 'StrandController@index');
+    Route::post('/addStrand', 'StrandController@addStrand');
+    Route::delete('/strand/{id}', 'StrandController@deleteStrandbyID');
+    Route::post('/strand/{id}', 'StrandController@editStrandbyID');
+
 });
