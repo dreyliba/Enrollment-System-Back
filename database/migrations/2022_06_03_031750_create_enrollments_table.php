@@ -76,16 +76,16 @@ class CreateEnrollmentsTable extends Migration
             $table->string("other_grade")->nullable();
             $table->string("household_member");
             $table->string("available_device");
-            $table->string("available_device_others");
+            $table->string("available_device_others")->nullable();
             $table->string("internet_connection", 25);
             $table->string("distance_learning");
-            $table->string("distance_learning_others");
+            $table->string("distance_learning_others")->nullable();
             $table->string("learning_challenges");
-            $table->string("learning_chanllenges_others");
+            $table->string("learning_chanllenges_others")->nullable();
             $table->string("is_benificiary", 25);
             $table->string("limited_face_to_face");
             $table->string("limited_classes_allowed");
-            $table->string("limited_face_to_face_others");
+            $table->string("limited_face_to_face_others")->nullable();
             $table->timestamps();
         });
     }
