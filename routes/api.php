@@ -19,25 +19,29 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', 'UserController@login');
 
 //Routes for user
-Route::middleware('auth:api')->group(function () {  
+Route::middleware('auth:api')->group(function () {
     Route::get('/users', 'UserController@index');
     Route::post('/addUser', 'UserController@addUser');
     Route::delete('/user/{id}', 'UserController@deleteUserbyID');
     Route::post('/user/{id}', 'UserController@editUserbyID');
     Route::post('/userUpdatePassword/{id}', 'UserController@loginUserChangePass');
-    
 
-//Routes for Track
+
+    //Routes for Track
     Route::get('/tracks', 'TrackController@index');
     Route::get('/track/{id}', 'TrackController@getTrack');
     Route::post('/addTrack', 'TrackController@addTrack');
     Route::delete('/track/{id}', 'TrackController@deleteTrackbyID');
     Route::post('/track/{id}', 'TrackController@editTrackbyID');
 
-//Routes for Strand
+    //Routes for Strand
     Route::get('/strands', 'StrandController@index');
     Route::post('/addStrand', 'StrandController@addStrand');
     Route::delete('/strand/{id}', 'StrandController@deleteStrandbyID');
     Route::post('/strand/{id}', 'StrandController@editStrandbyID');
 
+    //Routes for Enrollment
+    Route::get('/student/{id}', 'EnrollmentController@editStudentnyID');
+    Route::get('/student', 'EnrollmentController@store');
+    Route::get('/student/{id}', 'EnrollmentController@destroy');
 });

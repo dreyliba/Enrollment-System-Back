@@ -15,6 +15,7 @@ class CreateEnrollmentsTable extends Migration
     {
         Schema::create('enrollments', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
             $table->string("school_year");
             $table->string("lrn_status", 25);
             $table->string("returning")->nullable();
@@ -87,6 +88,8 @@ class CreateEnrollmentsTable extends Migration
             $table->string("limited_classes_allowed");
             $table->string("limited_face_to_face_others")->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

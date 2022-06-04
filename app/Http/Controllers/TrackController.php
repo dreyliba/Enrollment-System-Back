@@ -7,7 +7,8 @@ use App\Models\Track;
 
 class TrackController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $track = Track::all();
         return response()->json([
             'code' => 200,
@@ -15,7 +16,8 @@ class TrackController extends Controller
         ]);
     }
 
-    public function getTrack($id) {
+    public function getTrack($id)
+    {
         $track = Track::findOrFail($id);
         return response()->json([
             'code' => 200,
@@ -23,7 +25,8 @@ class TrackController extends Controller
         ]);
     }
 
-    public function addTrack(Request $request) {
+    public function addTrack(Request $request)
+    {
 
         $addTrack = new Track;
 
@@ -40,7 +43,7 @@ class TrackController extends Controller
             ]);
         } else {
             return response()->json([
-                'code' => 401,
+                'code' => 500,
                 'message' => 'Failed to Add Track!'
             ]);
         }
@@ -81,7 +84,7 @@ class TrackController extends Controller
             ]);
         } else {
             return response()->json([
-                'code' => 401,
+                'code' => 500,
                 'message' => 'Failed to Delete Track!'
             ]);
         }

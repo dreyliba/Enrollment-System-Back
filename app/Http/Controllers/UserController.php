@@ -106,7 +106,7 @@ class UserController extends Controller
             ]);
         } else {
             return response()->json([
-                'code' => 401,
+                'code' => 500,
                 'message' => 'Error updating user',
             ]);
         }
