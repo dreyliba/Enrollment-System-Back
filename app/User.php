@@ -21,6 +21,11 @@ class User extends Authenticatable
         'first_name', 'last_name', 'middle_name', 'email', 'password',
     ];
 
+    public function getFullNameAttribute()
+    {
+        return implode(' ', [$this->first_name, $this->middle_name, $this->last_name]);
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

@@ -20,6 +20,8 @@ class CreateEnrollmentsTable extends Migration
             $table->string("lrn_status", 25);
             $table->string("returning")->nullable();
             $table->string("grade_level_to_enroll");
+            $table->unsignedBigInteger('track_id')->nullable();
+            $table->unsignedBigInteger('strand_id')->nullable();
             $table->string("last_grade_level_completed")->nullable();
             $table->string("last_school_yr_completed")->nullable();
             $table->string("last_school_attended_name")->nullable();
@@ -88,8 +90,11 @@ class CreateEnrollmentsTable extends Migration
             $table->string("limited_classes_allowed");
             $table->string("limited_face_to_face_others")->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('track_id')->references('id')->on('tracks');
+            $table->foreign('strand_id')->references('id')->on('strands');
         });
     }
 

@@ -2,22 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\EnrollmentResource;
+use App\Models\Strand;
+use App\Models\Track;
 use Illuminate\Http\Request;
 use App\Models\Enrollment;
+use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class EnrollmentController extends Controller
 {
+    public function index(Request $request)
+    {
+        return EnrollmentResource::collection(Enrollment::paginate());
+    }
+
     public function editStudentnyID(Request $request, $id)
     {
         try {
             $enrollment = Enrollment::findOrFail($id);
             $enrollment = tap($enrollment)->update($request->all());
 
+            Log::info('Student information has been updated by ' . auth()->user()->full_name . ' -- at ' . Carbon::now()->format('Y-m-d h:i:s'));
+
             return response()->json([
                 'code' => 200,
                 'message' => 'Updated successfully',
-                'student' => $enrollment,
+                'student' => new EnrollmentResource($enrollment),
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -30,12 +42,15 @@ class EnrollmentController extends Controller
     public function store(Request $request)
     {
         try {
-            $enrollment = Enrollment::create($request->all());
+            $params = $request->all();
+            $params['user_id'] = auth()->user()->id;
+
+            $enrollment = Enrollment::create($params);
 
             return response()->json([
                 'code' => 200,
                 'message' => 'Created successfully',
-                'student' => $enrollment,
+                'student' => new EnrollmentResource($enrollment),
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -47,18 +62,29 @@ class EnrollmentController extends Controller
 
     public function destroy($id)
     {
-        $enrollment = Enrollment::findOrFail($id);
+        try {
+            $enrollment = Enrollment::findOrFail($id);
+            $enrollment->delete();
 
-        if ($enrollment == true) {
+            Log::info('Student information with ' . $id . ' has been delete by ' . auth()->user()->full_name . ' -- at ' . Carbon::now()->format('Y-m-d h:i:s'));
+
             return response()->json([
                 'code' => 200,
                 'message' => "Student Deleted Successfully!"
             ]);
-        } else {
+        } catch (Exception $e) {
             return response()->json([
-                'code' => 401,
+                'code' => 500,
                 'message' => 'Failed to Delete Student!'
-            ]);
+            ], 500);
         }
+    }
+
+    public function options()
+    {
+        return response()->json([
+            'tracks' => Track::all(),
+            'strands' => Strand::all(),
+        ]);
     }
 }

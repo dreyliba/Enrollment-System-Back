@@ -2,15 +2,21 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Enrollment extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         "school_year",
         "lrn_status",
         "returning",
         "grade_level_to_enroll",
+        "track_id",
+        "strand_id",
         "last_grade_level_completed",
         "last_school_yr_completed",
         "last_school_attended_name",
@@ -79,4 +85,19 @@ class Enrollment extends Model
         "limited_classes_allowed",
         "limited_face_to_face_others",
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function track()
+    {
+        return $this->belongsTo(Track::class);
+    }
+
+    public function strand()
+    {
+        return $this->belongsTo(Strand::class);
+    }
 }
