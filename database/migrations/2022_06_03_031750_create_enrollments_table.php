@@ -21,7 +21,9 @@ class CreateEnrollmentsTable extends Migration
             $table->string("returning")->nullable();
             $table->string("grade_level_to_enroll");
             $table->unsignedBigInteger('track_id')->nullable();
+            $table->unsignedBigInteger('last_year_track_id')->nullable();
             $table->unsignedBigInteger('strand_id')->nullable();
+            $table->unsignedBigInteger('last_year_strand_id')->nullable();
             $table->string("last_grade_level_completed")->nullable();
             $table->string("last_school_yr_completed")->nullable();
             $table->string("last_school_attended_name")->nullable();
