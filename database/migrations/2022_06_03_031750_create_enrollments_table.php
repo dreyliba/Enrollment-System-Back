@@ -81,7 +81,7 @@ class CreateEnrollmentsTable extends Migration
             $table->string("distance_learning");
             $table->string("distance_learning_others")->nullable();
             $table->string("learning_challenges");
-            $table->string("learning_chanllenges_others")->nullable();
+            $table->string("learning_challenges_others")->nullable();
             $table->string("is_benificiary", 25);
             $table->string("limited_face_to_face");
             $table->string("limited_classes_allowed");
