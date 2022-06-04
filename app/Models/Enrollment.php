@@ -73,7 +73,7 @@ class Enrollment extends Model
         "distance_learning",
         "distance_learning_others",
         "learning_challenges",
-        "learning_chanllenges_others",
+        "learning_challenges_others",
         "is_benificiary",
         "limited_face_to_face",
         "limited_classes_allowed",
