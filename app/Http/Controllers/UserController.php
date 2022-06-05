@@ -34,9 +34,9 @@ class UserController extends Controller
             ]);
         } else {
             return response()->json([
-                'code' => 401,
+                'code' => 422,
                 'message' => 'Invalid Username and Password'
-            ], 401);
+            ], 422);
         };
     }
 
