@@ -17,7 +17,13 @@ class EnrollmentController extends Controller
 {
     public function index(Request $request)
     {
-        return EnrollmentResource::collection(Enrollment::paginate());
+        $limit = 15;
+
+        if (!empty($request->limit)) {
+            $limit = $request->limit;
+        }
+
+        return EnrollmentResource::collection(Enrollment::paginate($limit));
     }
 
     public function show($id)
