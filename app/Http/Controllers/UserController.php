@@ -9,12 +9,24 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $query = User::query();
+
+        if (!empty($request->seach)) {
+            $query->where(function ($query) use ($request) {
+                $value = $request->search;
+
+                $query->where('first_name', 'like', "%$value%")
+                    ->orWhere('last_name', 'like', "%$value%")
+                    ->orWhere('email', 'like', "%$value%")
+                    ->orWhere('middle_name', 'like', "%$value%");
+            });
+        }
+
         return response()->json([
             'code' => 200,
-            'users' => $users,
+            'users' => $query->get(),
         ]);
     }
 
