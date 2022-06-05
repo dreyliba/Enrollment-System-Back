@@ -20,6 +20,12 @@ class EnrollmentController extends Controller
         return EnrollmentResource::collection(Enrollment::paginate());
     }
 
+    public function show($id)
+    {
+        $enrollment = Enrollment::findOrFail($id);
+        return new EnrollmentResource($enrollment);
+    }
+
     public function editStudentnyID(UpdateEnrollmentRequest $request, $id)
     {
         try {
@@ -27,29 +33,11 @@ class EnrollmentController extends Controller
 
             $params = $request->all();
 
-            if (is_array($request->household_member)) {
-                $params['household_member'] = implode(",", $request->household_member);
-            }
-
-            if (is_array($request->available_device)) {
-                $params['available_device'] = implode(",", $request->available_device);
-            }
-
-            if (is_array($request->internet_connection)) {
-                $params['internet_connection'] = implode(",", $request->internet_connection);
-            }
-
-            if (is_array($request->distance_learning)) {
-                $params['distance_learning'] = implode(",", $request->distance_learning);
-            }
-
-            if (is_array($request->learning_challenges)) {
-                $params['learning_challenges'] = implode(",", $request->learning_challenges);
-            }
-
-            if (is_array($request->limited_face_to_face)) {
-                $params['limited_face_to_face'] = implode(",", $request->limited_face_to_face);
-            }
+            $params['household_member'] = $this->getArrayValue($request->household_member);
+            $params['available_device'] = $this->getArrayValue($request->available_device);
+            $params['internet_connection'] = $this->getArrayValue($request->internet_connection);
+            $params['distance_learning'] = $this->getArrayValue($request->distance_learning);
+            $params['learning_challenges'] = $this->getArrayValue($request->learning_challenges);
 
             $enrollment = tap($enrollment)->update($params);
 
@@ -74,25 +62,11 @@ class EnrollmentController extends Controller
             $params = $request->all();
             $params['user_id'] = auth()->user()->id;
 
-            if (is_array($request->household_member)) {
-                $params['household_member'] = implode(",", $request->household_member);
-            }
-
-            if (is_array($request->available_device)) {
-                $params['available_device'] = implode(",", $request->available_device);
-            }
-
-            if (is_array($request->internet_connection)) {
-                $params['internet_connection'] = implode(",", $request->internet_connection);
-            }
-
-            if (is_array($request->distance_learning)) {
-                $params['distance_learning'] = implode(",", $request->distance_learning);
-            }
-
-            if (is_array($request->learning_challenges)) {
-                $params['learning_challenges'] = implode(",", $request->learning_challenges);
-            }
+            $params['household_member'] = $this->getArrayValue($request->household_member);
+            $params['available_device'] = $this->getArrayValue($request->available_device);
+            $params['internet_connection'] = $this->getArrayValue($request->internet_connection);
+            $params['distance_learning'] = $this->getArrayValue($request->distance_learning);
+            $params['learning_challenges'] = $this->getArrayValue($request->learning_challenges);
 
             if (is_array($request->limited_face_to_face)) {
                 $params['limited_face_to_face'] = implode(",", $request->limited_face_to_face);

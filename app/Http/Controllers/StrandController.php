@@ -7,15 +7,22 @@ use App\Models\Strand;
 
 class StrandController extends Controller
 {
-    public function index() {
-        $strand = Strand::all();
+    public function index(Request $request)
+    {
+        $query = Strand::query();
+
+        if ($request->track_id) {
+            $query->where('track_id', $request->track_id);
+        }
+
         return response()->json([
             'code' => 200,
-            'strands' => $strand,
+            'strands' => $query->get(),
         ]);
     }
 
-    public function addStrand(Request $request) {
+    public function addStrand(Request $request)
+    {
 
         $addStrand = new Strand;
 

@@ -24,9 +24,13 @@ class CreateEnrollmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'email',
+            'email' => 'email|nullable',
             'school_year' => 'required',
+            'lrn_status' => 'required',
             'grade_level_to_enroll' => 'required',
+            'school_to_enroll_name' => 'required',
+            'school_to_enroll_address' => 'required',
+            'school_to_enroll_in_id' => 'required',
             'last_name' => 'required',
             'first_name' => 'required',
             'date_of_birth' => 'required',
@@ -41,7 +45,6 @@ class CreateEnrollmentRequest extends FormRequest
             'internet_connection' => 'array',
             'distance_learning' => 'array',
             'learning_challenges' => 'array',
-            'limited_face_to_face' => 'array',
         ];
     }
 }

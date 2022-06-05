@@ -11,6 +11,7 @@ class Enrollment extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        "user_id",
         "school_year",
         "lrn_status",
         "returning",
@@ -77,14 +78,15 @@ class Enrollment extends Model
         "household_member",
         "available_device",
         "available_device_others",
+        "has_internet_connection",
         "internet_connection",
         "distance_learning",
         "distance_learning_others",
         "learning_challenges",
         "learning_challenges_others",
         "is_benificiary",
-        "limited_face_to_face",
         "limited_classes_allowed",
+        "limited_face_to_face",
         "limited_face_to_face_others",
     ];
 

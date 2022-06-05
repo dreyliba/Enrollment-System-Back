@@ -41,10 +41,11 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/strand/{id}', 'StrandController@editStrandbyID');
 
     //Routes for Enrollment
+    Route::get('enrollments/options', 'EnrollmentController@options');
+
     Route::get('/enrollments', 'EnrollmentController@index');
+    Route::get('/enrollments/{id}', 'EnrollmentController@show');
     Route::post('/enrollments', 'EnrollmentController@store');
     Route::post('/enrollments/{id}', 'EnrollmentController@editStudentnyID');
     Route::delete('/enrollments/{id}', 'EnrollmentController@destroy');
-
-    Route::get('enrollments/options', 'EnrollmentController@options');
 });
