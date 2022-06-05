@@ -13,7 +13,7 @@ class UserController extends Controller
     {
         $query = User::query();
 
-        if (!empty($request->seach)) {
+        if (!empty($request->search)) {
             $query->where(function ($query) use ($request) {
                 $value = $request->search;
 

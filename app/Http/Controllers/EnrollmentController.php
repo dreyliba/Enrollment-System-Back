@@ -25,7 +25,7 @@ class EnrollmentController extends Controller
 
         $query = Enrollment::query();
 
-        if (!empty($request->seach)) {
+        if (!empty($request->search)) {
             $query->where(function ($query) use ($request) {
                 $value = $request->search;
 
