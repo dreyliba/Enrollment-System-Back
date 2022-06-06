@@ -48,4 +48,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/enrollments', 'EnrollmentController@store');
     Route::post('/enrollments/{id}', 'EnrollmentController@editStudentnyID');
     Route::delete('/enrollments/{id}', 'EnrollmentController@destroy');
+
+    Route::get('/reports/enrollments', 'ReportController@enrollmentReports');
 });
