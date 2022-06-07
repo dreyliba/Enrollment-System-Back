@@ -13,7 +13,7 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        $roles = ['Admin', 'Instructor', 'Student', 'AnotherRoles'];
+        $roles = ['Admin', 'Teacher'];
 
         foreach ($roles as $value) {
             $role = Role::where('name', $value)->get();

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 
@@ -26,7 +28,7 @@ class UserController extends Controller
 
         return response()->json([
             'code' => 200,
-            'users' => $query->get(),
+            'users' => UserResource::collection($query->get()),
         ]);
     }
 
@@ -40,7 +42,7 @@ class UserController extends Controller
 
             return response()->json([
                 'code' => 200,
-                'user' => auth()->user(),
+                'user' => new UserResource(auth()->user()),
                 'token' => $token,
                 'message' => 'Success',
             ]);
@@ -66,6 +68,9 @@ class UserController extends Controller
         $addUser->middle_name = $request->first_name;
         $addUser->email = $request->email;
         $addUser->password = Hash::make($request->input('password'));
+
+        $teacher = Role::where('name', 'Teacher')->first();
+        $addUser->assignRole($teacher);
 
         $addUser->save();
 
