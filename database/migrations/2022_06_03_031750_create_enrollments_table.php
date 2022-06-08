@@ -40,7 +40,9 @@ class CreateEnrollmentsTable extends Migration
             $table->string("middle_name")->nullable();
             $table->string("extension_name")->nullable();
             $table->string("date_of_birth");
+            $table->string("age");
             $table->string("gender");
+            $table->string("has_children", 25);
             $table->string("indigenous_status", 25);
             $table->string("indigenous_status_name")->nullable();
             $table->string("mother_tongue");
@@ -88,10 +90,11 @@ class CreateEnrollmentsTable extends Migration
             $table->string("distance_learning_others")->nullable();
             $table->text("learning_challenges")->nullable();
             $table->string("learning_challenges_others")->nullable();
-            $table->string("is_benificiary", 25);
+            $table->string("is_4ps_benificiary", 25);
             $table->string("limited_classes_allowed");
             $table->text("limited_face_to_face")->nullable();
             $table->string("limited_face_to_face_others")->nullable();
+            $table->string("enrolled_date")->nullable();
             $table->timestamps();
             $table->softDeletes();
 

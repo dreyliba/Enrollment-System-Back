@@ -36,7 +36,9 @@ class Enrollment extends Model
         "middle_name",
         "extension_name",
         "date_of_birth",
+        "age",
         "gender",
+        "has_children",
         "indigenous_status",
         "indigenous_status_name",
         "mother_tongue",
@@ -84,10 +86,11 @@ class Enrollment extends Model
         "distance_learning_others",
         "learning_challenges",
         "learning_challenges_others",
-        "is_benificiary",
+        "is_4ps_benificiary",
         "limited_classes_allowed",
         "limited_face_to_face",
         "limited_face_to_face_others",
+        'enrolled_date',
     ];
 
     public function user()

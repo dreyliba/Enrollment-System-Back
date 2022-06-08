@@ -50,4 +50,6 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/enrollments/{id}', 'EnrollmentController@destroy');
 
     Route::get('/reports/enrollments', 'ReportController@enrollmentReports');
+    Route::get('/reports/daily', 'ReportController@getDailyReport');
+    Route::get('/reports/options', 'ReportController@options');
 });

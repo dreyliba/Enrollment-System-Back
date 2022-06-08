@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\EnrollmentResource;
 use App\Models\Enrollment;
+use App\Models\Strand;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -34,6 +35,40 @@ class ReportController extends Controller
             $query->where('strand_id', $request->strand_id);
         }
 
+        if (!empty($request->date_from)) {
+            $query->where('enrolled_date', '>=', $request->date_from);
+        }
+
+        if (!empty($request->date_to)) {
+            $query->where('enrolled_date', '<=', $request->date_to);
+        }
+
         return EnrollmentResource::collection($query->get());
+    }
+
+    public function getDailyReport(Request $request)
+    {
+        $query = Enrollment::query();
+
+        if (!empty($request->level)) {
+            $query->where('grade_level_to_enroll', $request->level);
+        }
+
+        if (!empty($request->date_from)) {
+            $query->where('enrolled_date', '>=', $request->date_from);
+        }
+
+        if (!empty($request->date_to)) {
+            $query->where('enrolled_date', '<=', $request->date_to);
+        }
+
+        return EnrollmentResource::collection($query->get());
+    }
+
+    public function options()
+    {
+        return response()->json([
+            'strands' => Strand::all(),
+        ]);
     }
 }
