@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DisabilityCategory;
 use App\Http\Requests\CreateEnrollmentRequest;
 use App\Http\Requests\UpdateEnrollmentRequest;
 use App\Http\Resources\EnrollmentResource;
@@ -159,6 +160,7 @@ class EnrollmentController extends Controller
         return response()->json([
             'tracks' => Track::all(),
             'strands' => Strand::all(),
+            'disability_categories' => DisabilityCategory::all(),
         ]);
     }
 }
