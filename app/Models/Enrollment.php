@@ -107,4 +107,11 @@ class Enrollment extends Model
     {
         return $this->belongsTo(Strand::class);
     }
+
+    protected $appends = ['full_name'];
+
+    public function getFullNameAttribute()
+    {
+        return implode(' ', [$this->first_name, $this->middle_name, $this->last_name]);
+    }
 }
