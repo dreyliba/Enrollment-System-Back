@@ -21,6 +21,8 @@ class User extends Authenticatable
         'first_name', 'last_name', 'middle_name', 'email', 'password',
     ];
 
+    protected $appends = ['full_name'];
+
     public function getFullNameAttribute()
     {
         return implode(' ', [$this->first_name, $this->middle_name, $this->last_name]);
