@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -28,7 +30,7 @@ class UserController extends Controller
 
         return response()->json([
             'code' => 200,
-            'users' => UserResource::collection($query->get()),
+            'users' => UserResource::collection($query->where('id', '!=', auth()->user()->id)->get()),
         ]);
     }
 
@@ -39,6 +41,7 @@ class UserController extends Controller
             'password' => $request->password,
         ])) {
             $token = auth()->user()->createToken('token')->accessToken;
+            Log::info("User " . auth()->user()->full_name . ' has logged in on the system @ ' . Carbon::now()->format('Y-m-d H:i:s'));
 
             return response()->json([
                 'code' => 200,
@@ -54,25 +57,43 @@ class UserController extends Controller
         };
     }
 
+    public function update(Request $request, User $user)
+    {
+        Log::info("User " . auth()->user()->full_name . ' updated user with id ' . $user->id);
+
+        $this->validate($request, [
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'last_name' => 'required',
+            'first_name' => 'required',
+        ]);
+
+        return new UserResource(tap($user)->update($request->all()));
+    }
+
     public function addUser(Request $request)
     {
         $this->validate($request, [
+            'email' => 'required|email|unique:users,email',
+            'last_name' => 'required',
+            'first_name' => 'required',
             'password' => 'min:6',
+            'role' => 'required',
             'confirm_password' => 'required_with:password|same:password|min:6'
         ]);
 
         $addUser = new User;
 
         $addUser->first_name = $request->first_name;
-        $addUser->last_name = $request->first_name;
-        $addUser->middle_name = $request->first_name;
+        $addUser->last_name = $request->last_name;
+        $addUser->middle_name = $request->middle_name;
         $addUser->email = $request->email;
         $addUser->password = Hash::make($request->input('password'));
 
-        $teacher = Role::where('name', 'Teacher')->first();
-        $addUser->assignRole($teacher);
+        $addUser->assignRole($request->role);
 
         $addUser->save();
+
+        Log::info("User " . auth()->user()->full_name . ' added a new user with name ' . $addUser->full_name);
 
         if ($addUser->save() == true) {
             return response()->json([
@@ -89,6 +110,7 @@ class UserController extends Controller
 
     public function deleteUserbyID($id)
     {
+        Log::info("User " . auth()->user()->full_name . ' deleted a user with id ' . $id);
         $users = User::where('id', $id)->delete();
 
         if ($users == true) {
@@ -107,6 +129,14 @@ class UserController extends Controller
     public function editUserbyID(Request $request, $id)
     {
         $user = User::find($id);
+        Log::info("User " . auth()->user()->full_name . ' updated user with id ' . $id);
+
+        $this->validate($request, [
+            'role' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'last_name' => 'required',
+            'first_name' => 'required',
+        ]);
 
         $user->first_name = $request->input('first_name');
         $user->middle_name = $request->input('middle_name');
@@ -114,6 +144,8 @@ class UserController extends Controller
         $user->email = $request->input('email');
 
         $user->save();
+
+        $user->syncRoles($request->role);
 
         if ($user->save() == 'true') {
             return response()->json([
@@ -131,6 +163,7 @@ class UserController extends Controller
 
     public function loginUserChangePass(Request $request, $id)
     {
+        Log::info("User " . auth()->user()->full_name . ' updated user password with id ' . $id);
         $this->validate($request, [
             'password' => 'min:6',
             'confirmPassword' => 'required_with:password|same:password|min:6'
@@ -155,6 +188,8 @@ class UserController extends Controller
 
     public function getLoginUser()
     {
-        return auth()->user();
+        return response()->json([
+            'data' => new UserResource(auth()->user()),
+        ]);
     }
 }

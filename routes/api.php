@@ -20,10 +20,12 @@ Route::post('login', 'UserController@login');
 
 //Routes for user
 Route::middleware('auth:api')->group(function () {
+    Route::get('/user', 'UserController@getLoginUser');
     Route::get('/users', 'UserController@index');
     Route::post('/addUser', 'UserController@addUser');
     Route::delete('/user/{id}', 'UserController@deleteUserbyID');
     Route::post('/user/{id}', 'UserController@editUserbyID');
+    Route::post('/user/{user}/update', 'UserController@update');
     Route::post('/userUpdatePassword/{id}', 'UserController@loginUserChangePass');
 
 

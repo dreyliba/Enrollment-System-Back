@@ -1,4 +1,5 @@
 1. clone repo
+1.1. create file .env in the root directory
 2. copy .env.example to .env
 3. composer install
 4. php artisan key:generate
