@@ -13,6 +13,7 @@ class Enrollment extends Model
     protected $fillable = [
         "user_id",
         "school_year",
+        "semester",
         "lrn_status",
         "returning",
         "grade_level_to_enroll",

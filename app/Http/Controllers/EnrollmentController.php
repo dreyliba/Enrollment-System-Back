@@ -44,6 +44,14 @@ class EnrollmentController extends Controller
             $query->where('enrolled_date', '<=', $request->date_to);
         }
 
+        if (!empty($request->school_year)) {
+            $query->where('school_year', $request->school_year);
+        }
+
+        if (!empty($request->semester)) {
+            $query->where('semester', $request->semester);
+        }
+
         if (!empty($request->level)) {
             $query->where('grade_level_to_enroll', $request->level);
         }
@@ -71,10 +79,6 @@ class EnrollmentController extends Controller
             $enrollment = Enrollment::findOrFail($id);
 
             $params = $request->all();
-
-            $today = date('Y-m-d');
-            $diff = date_diff(date_create($request->date_of_birth), date_create($today));
-            $params['age'] = $diff->format('%y');
 
             $params['household_member'] = $this->getArrayValue($request->household_member);
             $params['available_device'] = $this->getArrayValue($request->available_device);
@@ -104,11 +108,6 @@ class EnrollmentController extends Controller
         try {
             $params = $request->all();
             $params['user_id'] = auth()->user()->id;
-            $params['enrolled_date'] = Carbon::now()->format('Y-m-d');
-
-            $today = date('Y-m-d');
-            $diff = date_diff(date_create($request->date_of_birth), date_create($today));
-            $params['age'] = $diff->format('%y');
 
             $params['household_member'] = $this->getArrayValue($request->household_member);
             $params['available_device'] = $this->getArrayValue($request->available_device);

@@ -27,6 +27,14 @@ class ReportController extends Controller
             $query->where('grade_level_to_enroll', $request->level);
         }
 
+        if (!empty($request->school_year)) {
+            $query->where('school_year', $request->school_year);
+        }
+
+        if (!empty($request->semester)) {
+            $query->where('semester', $request->semester);
+        }
+
         if (!empty($request->track_id)) {
             $query->where('track_id', $request->track_id);
         }
@@ -52,6 +60,14 @@ class ReportController extends Controller
 
         if (!empty($request->level)) {
             $query->where('grade_level_to_enroll', $request->level);
+        }
+
+        if (!empty($request->school_year)) {
+            $query->where('school_year', $request->school_year);
+        }
+
+        if (!empty($request->semester)) {
+            $query->where('semester', $request->semester);
         }
 
         if (!empty($request->date_from)) {
