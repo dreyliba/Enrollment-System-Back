@@ -113,6 +113,6 @@ class Enrollment extends Model
 
     public function getFullNameAttribute()
     {
-        return implode(' ', [$this->first_name, $this->middle_name, $this->last_name]);
+        return implode(' ', [$this->first_name, $this->middle_name, $this->last_name, $this->extension_name]);
     }
 }
