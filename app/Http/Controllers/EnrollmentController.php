@@ -64,7 +64,7 @@ class EnrollmentController extends Controller
             $query->where('strand_id', $request->strand_id);
         }
 
-        return EnrollmentResource::collection($query->orderBy('created_at', 'desc')->paginate($limit));
+        return EnrollmentResource::collection($query->orderBy('id', 'desc')->paginate($limit));
     }
 
     public function show($id)
