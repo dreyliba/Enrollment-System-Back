@@ -15,11 +15,10 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            'first_name' => 'Andrian',
-            'last_name' => 'Pontejo',
-            'middle_name' => 'Liba',
-            'email' => 'admin@admin.com',
-            'password' => Hash::make('password'),
+            'first_name' => 'Admin',
+            'last_name' => 'Admin',
+            'email' => 'admin@hnvs.com',
+            'password' => Hash::make('superAdmin2022'),
         ]);
 
         $role = Role::where('name', 'Admin')->first();
