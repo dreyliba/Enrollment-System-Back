@@ -58,7 +58,7 @@ class ReportController extends Controller
             $query->where('enrolled_date', '<=', $request->date_to);
         }
 
-        return EnrollmentResource::collection($query->orderBy('first_name', 'asc')->paginate($limit));
+        return EnrollmentResource::collection($query->orderBy('id', 'desc')->paginate($limit));
     }
 
     public function getDailyReport(Request $request)
