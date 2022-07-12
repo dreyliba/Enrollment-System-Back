@@ -11,6 +11,13 @@ class ReportController extends Controller
 {
     public function enrollmentReports(Request $request)
     {
+
+        $limit = 15;
+
+        if (!empty($request->limit)) {
+            $limit = $request->limit;
+        }
+
         $query = Enrollment::query();
 
         if (!empty($request->search)) {
@@ -51,7 +58,7 @@ class ReportController extends Controller
             $query->where('enrolled_date', '<=', $request->date_to);
         }
 
-        return EnrollmentResource::collection($query->get());
+        return EnrollmentResource::collection($query->orderBy('first_name', 'asc')->paginate($limit));
     }
 
     public function getDailyReport(Request $request)
